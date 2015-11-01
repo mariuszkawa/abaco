@@ -224,17 +224,14 @@ term
 
 factor
     : ( ADD | SUB) factor
-    | functionExecute
+    | atom trailer*
     ;
 
-functionExecute
-    : dereference functionCall*
+trailer
+    : functionCall
+    | DOT Identifier
     ;
-
-dereference
-    : atom ( DOT Identifier )*
-    ;
-
+    
 atom
     : LPAREN expression RPAREN
     | Identifier
