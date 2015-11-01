@@ -90,8 +90,130 @@ tokens { INDENT, DEDENT }
 }
 
 script
-    : EOF
+    : statements EOF
     ;
+
+statements
+    : ( NEWLINE | statement )*
+    ;
+
+statement
+    : simpleStatement
+    ;
+
+simpleStatement
+    : simpleStatementBody NEWLINE
+    ;
+
+simpleStatementBody
+    : expression
+    ;
+
+expression
+    : orExpression
+    ;
+
+orExpression
+    : andExpression ( OR andExpression )*
+    ;
+
+andExpression
+    : notExpression ( AND notExpression )*
+    ;
+
+notExpression
+    : NOT notExpression
+    | comparisonExpression
+    ;
+
+comparisonExpression
+    : arithmeticExpression ( comparisonOperator arithmeticExpression )*
+    ;
+
+comparisonOperator
+    : NE
+    | LE
+    | GE
+    | EQ
+    | GT
+    | LT
+    ;
+
+arithmeticExpression
+    : term ( ( ADD | SUB ) term )*
+    ;
+
+term
+    : factor ( ( MUL | DIV ) factor )*
+    ;
+
+factor
+    : ( ADD | SUB) factor
+    | functionExecute
+    ;
+
+functionExecute
+    : dereference functionCall*
+    ;
+
+dereference
+    : atom ( DOT Identifier )*
+    ;
+
+atom
+    : LPAREN expression RPAREN
+    | Identifier
+    ;
+
+functionCall
+    : noArgsFunctionCall
+    | singleArgFunctionCall
+    | multiArgsFunctionCall
+    ;
+
+noArgsFunctionCall
+    : LPAREN RPAREN
+    ;
+
+singleArgFunctionCall
+    : LPAREN expression COMMA? RPAREN
+    ;
+
+multiArgsFunctionCall
+    : LPAREN expression ( COMMA expression )+ COMMA? RPAREN
+    ;
+
+// Keywords
+
+// Boolean Operators
+NOT : 'not' BR;
+AND : 'and' BR;
+OR : 'or' BR;
+
+// Separators
+
+COMMA : ',' BR;
+DOT : '.' BR;
+LPAREN : '(' {opened++;};
+RPAREN : ')' {opened--;};
+
+// Operators
+
+// Relational
+NE : '<>' BR;
+LE : '<=' BR;
+GE : '>=' BR;
+EQ : '=' BR;
+GT : '>' BR;
+LT : '<' BR;
+
+// Arithmetic
+ADD : '+' BR;
+SUB : '-' BR;
+MUL : '*' BR;
+DIV : '/' BR;
+
+// New Line
 
 NEWLINE
     : ( {atStartOfInput()}? WHITESPACE | ( '\r'? '\n' | '\r' ) WHITESPACE? )
@@ -123,14 +245,32 @@ NEWLINE
     }
     ;
 
+// Identifiers
+
+Identifier
+    : [a-zA-Z_] [a-zA-Z_0-9]*
+    ;
+
+// Other
+
 SKIP
     : ( WHITESPACE | COMMENT ) -> skip
+    ;
+
+// Fragments
+
+fragment BR
+    : LINE_BREAK*
     ;
 
 fragment WHITESPACE
     : [ \t]+
     ;
 
+fragment LINE_BREAK
+    : WHITESPACE? ( '\r'? '\n' | '\r' )
+    ;
+
 fragment COMMENT
-    : ';' ~[\r\n]*
+    : '\'' ~[\r\n]*
     ;
