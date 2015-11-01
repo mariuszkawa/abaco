@@ -163,6 +163,15 @@ dereference
 atom
     : LPAREN expression RPAREN
     | Identifier
+    | simpleLiteral
+    ;
+
+simpleLiteral
+    : NullLiteral
+    | BooleanLiteral
+    | IntegerLiteral
+    | RealLiteral
+    | StringLiteral
     ;
 
 functionCall
@@ -181,6 +190,29 @@ singleArgFunctionCall
 
 multiArgsFunctionCall
     : LPAREN expression ( COMMA expression )+ COMMA? RPAREN
+    ;
+
+// Literals
+
+NullLiteral
+    : 'null'
+    ;
+
+BooleanLiteral
+    : 'false'
+    | 'true'
+    ;
+
+IntegerLiteral
+    : [0-9]+
+    ;
+
+RealLiteral
+    : [0-9]+ '.' [0-9]+
+    ;
+
+StringLiteral
+    : '"' ~["]* '"'
     ;
 
 // Keywords
