@@ -107,11 +107,20 @@ simpleStatement
 
 simpleStatementBody
     : deleteStatement
+    | assignment
     | expression
     ;
 
 deleteStatement
     : DELETE Identifier ( DOT Identifier )?
+    ;
+
+assignment
+    : leftHandSide EQ expression
+    ;
+
+leftHandSide
+    : Identifier ( ( DOT Identifier ) | singleArgFunctionCall )?
     ;
 
 expression
