@@ -111,6 +111,8 @@ compoundStatementBody
     | forLoop
     | whileLoop
     | exceptionHandling
+    | functionDefinition
+    | anonymousFunctionAssignemnt
     ;
 
 conditionalStatement
@@ -151,6 +153,19 @@ catchClause
 
 finallyClause
     : FINALLY statementBlock
+    ;
+
+functionDefinition
+    : FUNCTION Identifier functionArguments? statementBlock
+    ;
+
+functionArguments
+    : LPAREN RPAREN
+    | LPAREN Identifier ( COMMA Identifier )* COMMA? RPAREN
+    ;
+
+anonymousFunctionAssignemnt
+    : leftHandSide EQ FUNCTION functionArguments? statementBlock
     ;
 
 statementBlock
@@ -238,6 +253,7 @@ atom
     | simpleLiteral
     | mapLiteral
     | arrayLiteral
+    | functionLiteral
     ;
 
 simpleLiteral
@@ -260,6 +276,16 @@ arrayLiteral
     : LPAREN RPAREN
     | LPAREN expression COMMA RPAREN
     | LPAREN expression ( COMMA expression )+ COMMA? RPAREN
+    ;
+
+functionLiteral
+    : functionLiteralArguments ARROW expression
+    ;
+
+functionLiteralArguments
+    : LPAREN RPAREN
+    | Identifier
+    | LPAREN Identifier ( COMMA Identifier )* COMMA? RPAREN
     ;
 
 functionCall
@@ -324,6 +350,9 @@ TRY : 'try';
 CATCH : 'catch' BR;
 FINALLY : 'finally';
 
+// Function Definition
+FUNCTION : 'function' BR;
+
 // Reference Deallocation
 DELETE : 'delete' BR;
 
@@ -361,6 +390,7 @@ NEWLINE
 
 // Separators
 
+ARROW : '=>' BR;
 COMMA : ',' BR;
 DOT : '.' BR;
 LPAREN : '(' {opened++;};
