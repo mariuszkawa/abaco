@@ -106,7 +106,12 @@ simpleStatement
     ;
 
 simpleStatementBody
-    : expression
+    : deleteStatement
+    | expression
+    ;
+
+deleteStatement
+    : DELETE Identifier ( DOT Identifier )?
     ;
 
 expression
@@ -251,6 +256,9 @@ ADD : '+' BR;
 SUB : '-' BR;
 MUL : '*' BR;
 DIV : '/' BR;
+
+// Reference Deallocation
+DELETE : 'delete' BR;
 
 // New Line
 
