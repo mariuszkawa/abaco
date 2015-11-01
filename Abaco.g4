@@ -164,6 +164,7 @@ atom
     : LPAREN expression RPAREN
     | Identifier
     | simpleLiteral
+    | arrayLiteral
     ;
 
 simpleLiteral
@@ -172,6 +173,12 @@ simpleLiteral
     | IntegerLiteral
     | RealLiteral
     | StringLiteral
+    ;
+
+arrayLiteral
+    : LPAREN RPAREN
+    | LPAREN expression COMMA RPAREN
+    | LPAREN expression ( COMMA expression )+ COMMA? RPAREN
     ;
 
 functionCall
