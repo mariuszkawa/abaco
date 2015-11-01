@@ -236,6 +236,7 @@ atom
     : LPAREN expression RPAREN
     | Identifier
     | simpleLiteral
+    | mapLiteral
     | arrayLiteral
     ;
 
@@ -245,6 +246,14 @@ simpleLiteral
     | IntegerLiteral
     | RealLiteral
     | StringLiteral
+    ;
+
+mapLiteral
+    : LPAREN mapEntry ( COMMA mapEntry )* COMMA? RPAREN
+    ;
+
+mapEntry
+    : expression COLON expression
     ;
 
 arrayLiteral
