@@ -98,7 +98,63 @@ statements
     ;
 
 statement
-    : simpleStatement
+    : compoundStatement
+    | simpleStatement
+    ;
+
+compoundStatement
+    : compoundStatementBody
+    ;
+
+compoundStatementBody
+    : conditionalStatement
+    | forLoop
+    | whileLoop
+    | exceptionHandling
+    ;
+
+conditionalStatement
+    : ifConditionalClause elseIfConditionalClause* elseConditionalClause?
+    ;
+
+ifConditionalClause
+    : IF expression statementBlock
+    ;
+
+elseIfConditionalClause
+    : ELSE ifConditionalClause
+    ;
+
+elseConditionalClause
+    : ELSE statementBlock
+    ;
+
+forLoop
+    : FOR Identifier COLON expression statementBlock
+    ;
+
+whileLoop
+    : WHILE expression statementBlock
+    ;
+
+exceptionHandling
+    : tryClause catchClause? finallyClause?
+    ;
+
+tryClause
+    : TRY statementBlock
+    ;
+
+catchClause
+    : CATCH Identifier statementBlock
+    ;
+
+finallyClause
+    : FINALLY statementBlock
+    ;
+
+statementBlock
+    : NEWLINE INDENT statement statements DEDENT
     ;
 
 simpleStatement
@@ -106,9 +162,14 @@ simpleStatement
     ;
 
 simpleStatementBody
-    : deleteStatement
+    : throwStatement
+    | deleteStatement
     | assignment
     | expression
+    ;
+
+throwStatement
+    : THROW expression
     ;
 
 deleteStatement
@@ -243,28 +304,19 @@ NOT : 'not' BR;
 AND : 'and' BR;
 OR : 'or' BR;
 
-// Separators
+// Conditional Statement
+IF : 'if' BR;
+ELSE : 'else';
 
-COMMA : ',' BR;
-DOT : '.' BR;
-LPAREN : '(' {opened++;};
-RPAREN : ')' {opened--;};
+// Loop Statement
+FOR : 'for' BR;
+WHILE : 'while' BR;
 
-// Operators
-
-// Relational
-NE : '<>' BR;
-LE : '<=' BR;
-GE : '>=' BR;
-EQ : '=' BR;
-GT : '>' BR;
-LT : '<' BR;
-
-// Arithmetic
-ADD : '+' BR;
-SUB : '-' BR;
-MUL : '*' BR;
-DIV : '/' BR;
+// Exception Handling
+THROW : 'throw' BR;
+TRY : 'try';
+CATCH : 'catch' BR;
+FINALLY : 'finally';
 
 // Reference Deallocation
 DELETE : 'delete' BR;
@@ -300,6 +352,30 @@ NEWLINE
         }
     }
     ;
+
+// Separators
+
+COMMA : ',' BR;
+DOT : '.' BR;
+LPAREN : '(' {opened++;};
+RPAREN : ')' {opened--;};
+COLON : ':' BR;
+
+// Operators
+
+// Relational
+NE : '<>' BR;
+LE : '<=' BR;
+GE : '>=' BR;
+EQ : '=' BR;
+GT : '>' BR;
+LT : '<' BR;
+
+// Arithmetic
+ADD : '+' BR;
+SUB : '-' BR;
+MUL : '*' BR;
+DIV : '/' BR;
 
 // Identifiers
 
