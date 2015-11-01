@@ -1,11 +1,11 @@
 function inputParameter(name)
     parameter = null
-    while not parameter.isInteger()
+    while not parameter.isReal()
         print("Input parameter " + name + ": ")
         try
-            parameter = readLine().toInteger()
+            parameter = readLine().toReal()
         catch e
-            print("The parameter you've entered is not a valid integer: " +
+            print("The parameter you've entered is not a valid real number: " +
                     e.message)
     parameter ' (It's a BASIC-like comment) No need for 'return' statement,
               ' functions just return the value of the last expression
@@ -30,12 +30,12 @@ else
     if d >= 0.0
         x = (-b) / (2.0 * a)
         if d = 0.0
-            print("d = 0.0, there is exactly one real root: " + x)
+            print("d = 0, there is exactly one real root: " + x)
         else
             ds = sqrt(d)
             x1 = x + ds
             x2 = x - ds
-            print("d > 0.0, there are exactly two real roots: " + x1 + " and " + x2)
+            print("d > 0, there are exactly two real roots: " + x1 + " and " + x2)
     else
-        print("d < 0.0, there are no real roots.")
+        print("d < 0, there are no real roots.")
 
