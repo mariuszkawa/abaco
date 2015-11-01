@@ -169,7 +169,7 @@ anonymousFunctionAssignemnt
     ;
 
 statementBlock
-    : NEWLINE INDENT statement statements DEDENT
+    : NEWLINE ( INDENT statement statements DEDENT )?
     ;
 
 simpleStatement
