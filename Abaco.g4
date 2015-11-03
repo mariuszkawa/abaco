@@ -226,7 +226,7 @@ term
     ;
 
 factor
-    : ( ADD | SUB) factor
+    : ( ADD | SUB ) factor
     | atom trailer*
     ;
 
