@@ -90,23 +90,15 @@ tokens { INDENT, DEDENT }
 }
 
 script
-    : statements EOF
-    ;
-
-statements
-    : ( NEWLINE | statement )*
+    : ( NEWLINE | statement )* EOF
     ;
 
 statement
     : compoundStatement
-    | simpleStatement
+    | simpleStatement NEWLINE
     ;
 
 compoundStatement
-    : compoundStatementBody
-    ;
-
-compoundStatementBody
     : conditionalStatement
     | forLoop
     | whileLoop
@@ -169,14 +161,10 @@ anonymousFunctionAssignemnt
     ;
 
 statementBlock
-    : NEWLINE ( INDENT statement statements DEDENT )?
+    : NEWLINE ( INDENT statement ( NEWLINE | statement )* DEDENT )?
     ;
 
 simpleStatement
-    : simpleStatementBody NEWLINE
-    ;
-
-simpleStatementBody
     : throwStatement
     | deleteStatement
     | assignment
