@@ -257,7 +257,7 @@ mapLiteral
     ;
 
 mapEntry
-    : expression COLON expression
+    : Identifier COLON expression
     ;
 
 arrayLiteral
@@ -267,12 +267,11 @@ arrayLiteral
     ;
 
 functionLiteral
-    : functionLiteralArguments ARROW expression
+    : functionLiteralArguments COLON expression
     ;
 
 functionLiteralArguments
     : LPAREN RPAREN
-    | Identifier
     | LPAREN Identifier ( COMMA Identifier )* COMMA? RPAREN
     ;
 
@@ -378,7 +377,6 @@ NEWLINE
 
 // Separators
 
-ARROW : '=>' BR;
 COMMA : ',' BR;
 DOT : '.' BR;
 LPAREN : '(' {opened++;};
