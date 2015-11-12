@@ -1,5 +1,5 @@
 function inputParameter(name)
-    parameter = null
+    parameter = nil
     while not parameter.isReal()
         print("Input parameter " + name + ": ")
         try
