@@ -242,8 +242,7 @@ atom
 simpleLiteral
     : NilLiteral
     | BooleanLiteral
-    | IntegerLiteral
-    | RealLiteral
+    | NumberLiteral
     | StringLiteral
     ;
 
@@ -299,12 +298,10 @@ BooleanLiteral
     | 'true'
     ;
 
-IntegerLiteral
-    : [0-9]+
-    ;
-
-RealLiteral
-    : [0-9]+ '.' [0-9]+
+NumberLiteral
+    : PlainNotationDecimalNumber
+    | ScientificNotationDecimalNumber
+    | HexadecimalInteger
     ;
 
 StringLiteral
@@ -404,6 +401,66 @@ SKIP
     ;
 
 // Fragments
+
+fragment PlainNotationDecimalNumber
+    : DecimalDigit+ DecimalFraction?
+    ;
+
+fragment ScientificNotationDecimalNumber
+    : Mantissa ExponentIndicator Exponent
+    ;
+
+fragment HexadecimalInteger
+    : HexadecimalPrefix HexadecimalDigit+
+    ;
+
+fragment DecimalFraction
+    : DecimalPoint DecimalDigit+
+    ;
+
+fragment Mantissa
+    : DecimalDigitExcludingZero DecimalFraction?
+    ;
+
+fragment Exponent
+    : Sign? DecimalDigit+
+    ;
+
+fragment Sign
+    : [+-]
+    ;
+
+fragment Zero
+    : '0'
+    ;
+
+fragment DecimalDigit
+    : [0-9]
+    ;
+
+fragment DecimalDigitExcludingZero
+    : [1-9]
+    ;
+
+fragment HexadecimalDigit
+    : [0-9a-fA-F]
+    ;
+
+fragment DecimalPoint
+    : '.'
+    ;
+
+fragment HexadecimalPrefix
+    : Zero HexadecimalIndicator
+    ;
+
+fragment HexadecimalIndicator
+    : [xX]
+    ;
+
+fragment ExponentIndicator
+    : [eE]
+    ;
 
 fragment BR
     : LINE_BREAK*
