@@ -166,17 +166,12 @@ statementBlock
 
 simpleStatement
     : throwStatement
-    | deleteStatement
     | assignment
     | expression
     ;
 
 throwStatement
     : THROW expression
-    ;
-
-deleteStatement
-    : DELETE Identifier ( DOT Identifier )?
     ;
 
 assignment
@@ -339,9 +334,6 @@ FINALLY : 'finally';
 
 // Function Definition
 FUNCTION : 'function' BR;
-
-// Reference Deallocation
-DELETE : 'delete' BR;
 
 // New Line
 
