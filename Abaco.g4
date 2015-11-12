@@ -160,6 +160,10 @@ anonymousFunctionAssignemnt
     : leftHandSide EQ FUNCTION functionArguments? statementBlock
     ;
 
+leftHandSide
+    : Identifier ( ( DOT Identifier ) | ( LPAREN expression COMMA? RPAREN ) )?
+    ;
+
 statementBlock
     : NEWLINE ( INDENT statement ( NEWLINE | statement )* DEDENT )?
     ;
@@ -176,10 +180,6 @@ throwStatement
 
 assignment
     : leftHandSide EQ expression
-    ;
-
-leftHandSide
-    : Identifier ( ( DOT Identifier ) | singleArgFunctionCall )?
     ;
 
 expression
@@ -230,6 +230,11 @@ trailer
     | DOT Identifier
     ;
     
+functionCall
+    : LPAREN RPAREN
+    | LPAREN expression ( COMMA expression )* COMMA? RPAREN
+    ;
+
 atom
     : LPAREN expression RPAREN
     | Identifier
@@ -248,39 +253,16 @@ simpleLiteral
 structureLiteral
     : LPAREN RPAREN
     | LPAREN expression COMMA RPAREN
-    | LPAREN Identifier COLON expression COMMA? RPAREN
-    | LPAREN structureElement ( COMMA structureElement )* COMMA? RPAREN
+    | LPAREN expression COLON expression COMMA? RPAREN
+    | LPAREN structureElement ( COMMA structureElement )+ COMMA? RPAREN
     ;
 
 structureElement
-    : ( Identifier COLON )? expression
+    : ( expression COLON )? expression
     ;
 
 functionLiteral
-    : functionLiteralArguments COLON expression
-    ;
-
-functionLiteralArguments
-    : LPAREN RPAREN
-    | LPAREN Identifier ( COMMA Identifier )* COMMA? RPAREN
-    ;
-
-functionCall
-    : noArgsFunctionCall
-    | singleArgFunctionCall
-    | multiArgsFunctionCall
-    ;
-
-noArgsFunctionCall
-    : LPAREN RPAREN
-    ;
-
-singleArgFunctionCall
-    : LPAREN expression COMMA? RPAREN
-    ;
-
-multiArgsFunctionCall
-    : LPAREN expression ( COMMA expression )+ COMMA? RPAREN
+    : ( Identifier | functionArguments ) ARROW expression
     ;
 
 // Literals
@@ -363,6 +345,7 @@ NEWLINE
 
 // Separators
 
+ARROW : '=>' BR;
 COMMA : ',' BR;
 DOT : '.' BR;
 LPAREN : '(' {opened++;};
