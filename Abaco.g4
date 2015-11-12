@@ -240,7 +240,7 @@ atom
     ;
 
 simpleLiteral
-    : NullLiteral
+    : NilLiteral
     | BooleanLiteral
     | IntegerLiteral
     | RealLiteral
@@ -290,8 +290,8 @@ multiArgsFunctionCall
 
 // Literals
 
-NullLiteral
-    : 'null'
+NilLiteral
+    : 'nil'
     ;
 
 BooleanLiteral
