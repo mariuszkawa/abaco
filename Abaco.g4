@@ -305,7 +305,7 @@ NumberLiteral
     ;
 
 StringLiteral
-    : '"' ~["]* '"'
+    : '"' StringCharacter* '"'
     ;
 
 // Keywords
@@ -460,6 +460,15 @@ fragment HexadecimalIndicator
 
 fragment ExponentIndicator
     : [eE]
+    ;
+
+fragment StringCharacter
+    : ~["\\]
+    | EscapeSequence
+    ;
+
+fragment EscapeSequence
+    : '\\' [btnfr"\\]
     ;
 
 fragment BR
