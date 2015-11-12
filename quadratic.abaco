@@ -1,11 +1,10 @@
 function inputParameter(name)
-    parameter = nil
-    while not parameter.isReal()
+    while not parameter.isNumber()
         print("Input parameter " + name + ": ")
         try
-            parameter = readLine().toReal()
+            parameter = readLine().toNumber()
         catch e
-            print("The parameter you've entered is not a valid real number: " +
+            print("The parameter you've entered is not a valid number: " +
                     e.message)
     parameter ' (It's a BASIC-like comment) No need for 'return' statement,
               ' functions just return the value of the last expression
