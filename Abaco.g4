@@ -124,7 +124,7 @@ elseConditionalClause
     ;
 
 forLoop
-    : FOR Identifier COLON expression statementBlock
+    : FOR ( Identifier COLON )? Identifier IN expression statementBlock
     ;
 
 whileLoop
@@ -234,8 +234,7 @@ atom
     : LPAREN expression RPAREN
     | Identifier
     | simpleLiteral
-    | mapLiteral
-    | arrayLiteral
+    | structureLiteral
     | functionLiteral
     ;
 
@@ -246,18 +245,15 @@ simpleLiteral
     | StringLiteral
     ;
 
-mapLiteral
-    : LPAREN mapEntry ( COMMA mapEntry )* COMMA? RPAREN
-    ;
-
-mapEntry
-    : Identifier COLON expression
-    ;
-
-arrayLiteral
+structureLiteral
     : LPAREN RPAREN
     | LPAREN expression COMMA RPAREN
-    | LPAREN expression ( COMMA expression )+ COMMA? RPAREN
+    | LPAREN Identifier COLON expression COMMA? RPAREN
+    | LPAREN structureElement ( COMMA structureElement )* COMMA? RPAREN
+    ;
+
+structureElement
+    : ( Identifier COLON )? expression
     ;
 
 functionLiteral
@@ -321,6 +317,7 @@ ELSE : 'else';
 
 // Loop Statement
 FOR : 'for' BR;
+IN : 'in' BR;
 WHILE : 'while' BR;
 
 // Exception Handling
