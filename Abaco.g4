@@ -89,6 +89,10 @@ tokens { INDENT, DEDENT }
     }
 }
 
+/*
+ * Parser grammar
+ */
+
 script
     : ( NEWLINE | statement )* EOF
     ;
@@ -264,6 +268,10 @@ structureElement
 functionLiteral
     : ( Identifier | functionArguments ) ARROW expression
     ;
+
+/*
+ * Lexer grammar
+ */
 
 // Literals
 
