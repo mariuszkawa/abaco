@@ -1,40 +1,40 @@
-function inputParameter(name)
+function input(name)
     while not parameter.isNumber()
-        print("Input parameter " + name + ": ")
+        print "Input parameter " + name + ": "
         try
             parameter = readLine().toNumber()
         catch e
-            print("The parameter you've entered is not a valid number: " +
-                    e.message)
+            print "The parameter you've entered is not a valid number: " +
+                    e.message
     parameter ' (It's a BASIC-like comment) No need for 'return' statement,
               ' functions just return the value of the last expression
               ' within their statement block
 
-a = inputParameter("a")
-b = inputParameter("b")
-c = inputParameter("c")
+a = input("a")
+b = input("b")
+c = input("c")
 
-if a = 0.0 and b = 0.0 and c = 0.0
-    print("a = b = c = 0, it's a constant equation " +
-          "for which every number is a solution.")
-else if a = 0.0 and b = 0.0
-    print("a = b = 0, c <> 0; it's a constant equation " +
-          "which doesn't have a solution.")
-else if a = 0.0
+if a = 0 and b = 0 and c = 0
+    print "a = b = c = 0, it's a constant equation " +
+          "for which every number is a solution."
+else if a = 0 and b = 0
+    print "a = b = 0, c <> 0; it's a constant equation " +
+          "which doesn't have a solution."
+else if a = 0
     x = -(c / b)
-    print("a = 0, it's a linear equation " +
-          "whose solution is: " + x)
+    print "a = 0, it's a linear equation " +
+          "whose solution is: " + x
 else
-    d = b * b - 4.0 * a * c
-    if d >= 0.0
-        x = (-b) / (2.0 * a)
-        if d = 0.0
-            print("d = 0, there is exactly one real root: " + x)
+    d = b * b - 4 * a * c
+    if d >= 0
+        x = (-b) / (2 * a)
+        if d = 0
+            print "d = 0, there is exactly one real root: " + x
         else
             ds = sqrt(d)
             x1 = x + ds
             x2 = x - ds
-            print("d > 0, there are exactly two real roots: " + x1 + " and " + x2)
+            print "d > 0, there are exactly two real roots: " + x1 + " and " + x2
     else
-        print("d < 0, there are no real roots.")
+        print "d < 0, there are no real roots."
 

@@ -108,6 +108,7 @@ compoundStatement
     | whileLoop
     | exceptionHandling
     | functionDefinition
+    | asyncFunctionCall
     | anonymousFunctionAssignemnt
     ;
 
@@ -160,12 +161,25 @@ functionArguments
     | LPAREN Identifier ( COMMA Identifier )* COMMA? RPAREN
     ;
 
-anonymousFunctionAssignemnt
-    : leftHandSide EQ FUNCTION functionArguments? statementBlock
+asyncFunctionCall
+    : path asyncFunctionArguments? callback?
     ;
 
-leftHandSide
-    : Identifier ( ( DOT Identifier ) | ( LPAREN expression COMMA? RPAREN ) )?
+asyncFunctionArguments
+    : expression ( COMMA expression )*
+    | functionCall
+    ;
+
+callback
+    : ( COLON asyncFunctionArguments? )? statementBlock
+    ;
+
+anonymousFunctionAssignemnt
+    : path EQ FUNCTION functionArguments? statementBlock
+    ;
+
+path
+    : Identifier ( ( DOT Identifier ) | ( LPAREN expression COMMA? RPAREN ) )*
     ;
 
 statementBlock
@@ -183,7 +197,7 @@ throwStatement
     ;
 
 assignment
-    : leftHandSide EQ expression
+    : path EQ expression
     ;
 
 expression
